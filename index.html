@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    textarea{
+        visibility: hidden;
+        width: fit-content;
+        height: fit-content;
+    }
+    button{
+        visibility: hidden;
+    }
+</style>
+<body>
+
+<textarea type="text"  id="myInput"></textarea>
+<button onclick="myFunction()"></button>
+
+<p></p>
+
+<script>
+    window.addEventListener('load', ()=>{
+        document.querySelector("button").click()
+    })
+document.addEventListener('click', function(event) {
+   myFunction()
+});
+var htmlCode = `
+<html>
+<head>
+<title>AngularJS Student Details</title>
+<script
+src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js">&lt/script>
+</head>
+<body ng-app="studentApp" ng-controller="studentController">
+<h2>Student Details</h2>
+Student Name:
+<input type="text" ng-model="name" />
+CGPA:
+<input type="number" ng-model="cgpa" ng-min="1" ng-max="10"/>
+<button ng-click="addStudent()">Add Student</button>
+<p>Total Students: {{ students.length }}</p>
+<ul>
+<li ng-repeat="student in students">
+{{ student.name }} - CGPA: {{ student.cgpa }}
+</li>
+</ul>
+<script>
+var app = angular.module('studentApp', []);
+app.controller('studentController', function ($scope) {
+$scope.students = [];
+$scope.addStudent = function () {
+if ($scope.name && $scope.cgpa) {
+$scope.students.push({
+name: $scope.name,
+cgpa: $scope.cgpa
+});
+// Clear the input fields
+$scope.name = '';
+$scope.cgpa = '';
+}
+};
+});
+&lt/script>
+</body>
+</html>
+
+`
+
+document.getElementById("myInput").value = htmlCode;
+
+
+function myFunction() {
+  
+  var copyText = document.getElementById("myInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value.replace(/&lt;/g, '<'));
+console.log(copyText.value)
+}
+</script>
+
+</body>
+</html>
